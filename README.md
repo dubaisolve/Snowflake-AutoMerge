@@ -1,3 +1,22 @@
+MERGER_BUILDER_GEN and DIAOP_REFRESH Procedures 🚀
+MERGER_BUILDER_GEN Procedure
+Scalability and Flexibility 🌍
+Dynamic SQL Generation: Effortlessly scales to handle a large number of tables (like 1000), avoiding the need for writing individual merge scripts for each. 📈
+Adaptability: Easily accommodates new tables or schema changes without updating each script. 🔄
+Advantages 🔥
+Reduced Maintenance: A single, dynamic script is much easier to maintain than hundreds or thousands of individual scripts. 🛠️
+Uniform Process: Ensures consistency in data handling across various tables. 🧩
+Considerations 🤔
+Performance: Keep an eye on the performance, especially with large datasets. ⏱️
+Testing: Ensure thorough testing for handling different table structures and data types. 🧪
+Documentation: Essential for future maintenance and clarity for new team members. 📚
+DIAOP_REFRESH Procedure
+Automation and Efficiency 🏗️
+Automated Table Processing: Iterates over a preloaded list of tables for automated merging, reducing manual effort. 🔄
+Conclusion 🌟
+Practical and Necessary: For managing a vast number of tables, this dynamic and automated approach is not just practical but essential for efficiency. 🛠️
+Smart Database Programming: A savvy use of database scripting to handle large-scale data operations in Snowflake. 💡
+
 ## Simplification of data load for Snowflake.
 This piece of work describes how data load form files in ADLS folder storage to physical tables in SF Warehouse can be simplified by using developed procedure. As a growing need for importing data from files grows especially add-hock scenarios and non-regular load there is a need for data load method that would avoid duplication and provide adequate flexibility in code development. Something that can be reused and could be executed in future automation's.
 
@@ -115,20 +134,5 @@ LOG_ID	number of rows inserted	number of rows updated	PROC_NAME	FINISHED	USER_NA
 syntax error line 17 at position 4 unexpected ')'.
 syntax error line 24 at position 15 unexpected 'MONTH_ID'.
 syntax error line 24 at position 23 unexpected ',  (fixed)
------------------------------ 
 
-## Finally some reviews from Chat GPT since this code was not written with the help of any AI : 
 
-#Efficiency of MERGER_BUILDER_GEN for Large Scale Operations
-#Scalability: The dynamic SQL generation approach is highly scalable. Writing individual merge or copy scripts for a thousand tables would be impractical and hard to maintain.
-#Flexibility: Your method allows for easy accommodation of new tables or changes in table structures without the need for individual script updates.
-#Automation: Coupling this with the DIAOP_REFRESH procedure, which iterates over a preloaded list of tables, automates the process, significantly reducing manual intervention and potential for human error.
-##Advantages of Your Approach
-#Reduced Maintenance: Single script maintenance versus hundreds or thousands of individual scripts.
-#Adaptability: Easier to adapt to schema changes across many tables.
-#Uniformity: Ensures a consistent approach to data merging across different tables.
-##Considerations for Your Method
-#Performance Monitoring: Given the dynamic nature of the script, it's essential to monitor its performance, especially when dealing with large datasets.
-#Extensive Testing: Thorough testing is crucial to ensure the script handles all possible variations in table structures and data types.
-#Documentation: Detailed documentation is vital for future reference and for new team members to understand the setup.
-##Conclusion: For a situation with a vast number of tables, your method of using a single, dynamic procedure is not only practical but also necessary for efficient management. It simplifies the process, minimizes repetitive work, and is easier to maintain and update. This is a smart use of database programming to handle large-scale data operations in Snowflake.
