@@ -1,21 +1,27 @@
-MERGER_BUILDER_GEN and DIAOP_REFRESH Procedures 🚀
-MERGER_BUILDER_GEN Procedure
-Scalability and Flexibility 🌍
-Dynamic SQL Generation: Effortlessly scales to handle a large number of tables (like 1000), avoiding the need for writing individual merge scripts for each. 📈
-Adaptability: Easily accommodates new tables or schema changes without updating each script. 🔄
-Advantages 🔥
-Reduced Maintenance: A single, dynamic script is much easier to maintain than hundreds or thousands of individual scripts. 🛠️
-Uniform Process: Ensures consistency in data handling across various tables. 🧩
-Considerations 🤔
-Performance: Keep an eye on the performance, especially with large datasets. ⏱️
-Testing: Ensure thorough testing for handling different table structures and data types. 🧪
-Documentation: Essential for future maintenance and clarity for new team members. 📚
-DIAOP_REFRESH Procedure
-Automation and Efficiency 🏗️
-Automated Table Processing: Iterates over a preloaded list of tables for automated merging, reducing manual effort. 🔄
-Conclusion 🌟
-Practical and Necessary: For managing a vast number of tables, this dynamic and automated approach is not just practical but essential for efficiency. 🛠️
-Smart Database Programming: A savvy use of database scripting to handle large-scale data operations in Snowflake. 💡
+# MERGER_BUILDER_GEN and DIAOP_REFRESH Procedures 🚀
+
+## MERGER_BUILDER_GEN Procedure
+### Scalability and Flexibility 🌍
+- **Dynamic SQL Generation**: Effortlessly scales to handle a large number of tables (like 1000), avoiding the need for writing individual merge scripts for each. 📈
+- **Adaptability**: Easily accommodates new tables or schema changes without updating each script. 🔄
+
+### Advantages 🔥
+- **Reduced Maintenance**: A single, dynamic script is much easier to maintain than hundreds or thousands of individual scripts. 🛠️
+- **Uniform Process**: Ensures consistency in data handling across various tables. 🧩
+
+### Considerations 🤔
+- **Performance**: Keep an eye on the performance, especially with large datasets. ⏱️
+- **Testing**: Ensure thorough testing for handling different table structures and data types. 🧪
+- **Documentation**: Essential for future maintenance and clarity for new team members. 📚
+
+## DIAOP_REFRESH Procedure
+### Automation and Efficiency 🏗️
+- **Automated Table Processing**: Iterates over a preloaded list of tables for automated merging, reducing manual effort. 🔄
+
+## Conclusion 🌟
+- **Practical and Necessary**: For managing a vast number of tables, this dynamic and automated approach is not just practical but essential for efficiency. 🛠️
+- **Smart Database Programming**: A savvy use of database scripting to handle large-scale data operations in Snowflake. 💡
+
 
 ## Simplification of data load for Snowflake.
 This piece of work describes how data load form files in ADLS folder storage to physical tables in SF Warehouse can be simplified by using developed procedure. As a growing need for importing data from files grows especially add-hock scenarios and non-regular load there is a need for data load method that would avoid duplication and provide adequate flexibility in code development. Something that can be reused and could be executed in future automation's.
