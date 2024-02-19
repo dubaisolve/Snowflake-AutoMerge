@@ -115,27 +115,20 @@ LOG_ID	number of rows inserted	number of rows updated	PROC_NAME	FINISHED	USER_NA
 syntax error line 17 at position 4 unexpected ')'.
 syntax error line 24 at position 15 unexpected 'MONTH_ID'.
 syntax error line 24 at position 23 unexpected ',  (fixed)
-920	1,213	0	SAFETY_LEADING	18/10/2020 11:58	EACOMPANY_X__GENERIC_DEV	EA_COMPANY_X__DEVELOPER_DEV	done	
-919	1,213	0	SAFETY_LAGGING	18/10/2020 11:58	EACOMPANY_X__GENERIC_DEV	EA_COMPANY_X__DEVELOPER_DEV	done	
-918	8,743	0	SAFETY_INCIDENTS	18/10/2020 11:58	EACOMPANY_X__GENERIC_DEV	EA_COMPANY_X__DEVELOPER_DEV	done	
-917	1,213	0	SAFETY_BUSINESS	18/10/2020 11:58	EACOMPANY_X__GENERIC_DEV	EA_COMPANY_X__DEVELOPER_DEV	done	
-916	58,345	0	PL_LC	18/10/2020 11:57	EACOMPANY_X__GENERIC_DEV	EA_COMPANY_X__DEVELOPER_DEV	done	
-915	705	0	PENALTIES	18/10/2020 11:57	EACOMPANY_X__GENERIC_DEV	EA_COMPANY_X__DEVELOPER_DEV	done	
-914	10,801	0	OPS_GH	18/10/2020 11:57	EACOMPANY_X__GENERIC_DEV	EA_COMPANY_X__DEVELOPER_DEV	done	
-913	2,532	0	OPS_CARGO	18/10/2020 11:57	EACOMPANY_X__GENERIC_DEV	EA_COMPANY_X__DEVELOPER_DEV	done	
-912	18	0	NPS	18/10/2020 11:57	EACOMPANY_X__GENERIC_DEV	EA_COMPANY_X__DEVELOPER_DEV	done	
-911	49,686	0	MPR_KPI	18/10/2020 11:57	EACOMPANY_X__GENERIC_DEV	EA_COMPANY_X__DEVELOPER_DEV	done	
-910	660	0	MASTER_SHAREHOLDING	18/10/2020 11:56	EACOMPANY_X__GENERIC_DEV	EA_COMPANY_X__DEVELOPER_DEV	done	
-909	4	0	MASTER_SAFETY_TARGETS	18/10/2020 11:56	EACOMPANY_X__GENERIC_DEV	EA_COMPANY_X__DEVELOPER_DEV	done	
-908	29	0	MASTER_SAFETY_COMPANY	18/10/2020 11:56	EACOMPANY_X__GENERIC_DEV	EA_COMPANY_X__DEVELOPER_DEV	done	
-907	86	0	MASTER_PL_ACCOUNTS	18/10/2020 11:56	EACOMPANY_X__GENERIC_DEV	EA_COMPANY_X__DEVELOPER_DEV	done	
-906	660	0	MASTER_MPR_CITY	18/10/2020 11:56	EACOMPANY_X__GENERIC_DEV	EA_COMPANY_X__DEVELOPER_DEV	done	
-905	276	0	MASTER_KPI_TARGETS	18/10/2020 11:56	EACOMPANY_X__GENERIC_DEV	EA_COMPANY_X__DEVELOPER_DEV	done	
-904	11,051	0	MASTER_GEOGRAPHY	18/10/2020 11:56	EACOMPANY_X__GENERIC_DEV	EA_COMPANY_X__DEVELOPER_DEV	done	
-903	540	0	MASTER_EXCHANGE_RATES	18/10/2020 11:55	EACOMPANY_X__GENERIC_DEV	EA_COMPANY_X__DEVELOPER_DEV	done	
-902	312	0	MASTER_DATE	18/10/2020 11:55	EACOMPANY_X__GENERIC_DEV	EA_COMPANY_X__DEVELOPER_DEV	done	
-901	0	0	DEBTOR	18/10/2020 15:55	EACOMPANY_X__GENERIC_DEV	EA_COMPANY_X__DEVELOPER_DEV	Failed	100183 | State: P0000\\n  Message: SQL compilation error:
-syntax error line 17 at position 4 unexpected ')'.
-syntax error line 24 at position 15 unexpected 'MONTH_ID'.
-syntax error line 24 at position 23 unexpected ', (Fixed)
-900	22	0	DASHBOARD_KPIS	18/10/2020 11:55	EACOMPANY_X__GENERIC_DEV	EA_COMPANY_X__DEVELOPER_DEV	done	
+----------------------------- 
+
+## Finally some reviews from Chat GPT since this code was not written with the help of any AI : 
+
+#Efficiency of MERGER_BUILDER_GEN for Large Scale Operations
+#Scalability: The dynamic SQL generation approach is highly scalable. Writing individual merge or copy scripts for a thousand tables would be impractical and hard to maintain.
+#Flexibility: Your method allows for easy accommodation of new tables or changes in table structures without the need for individual script updates.
+#Automation: Coupling this with the DIAOP_REFRESH procedure, which iterates over a preloaded list of tables, automates the process, significantly reducing manual intervention and potential for human error.
+##Advantages of Your Approach
+#Reduced Maintenance: Single script maintenance versus hundreds or thousands of individual scripts.
+#Adaptability: Easier to adapt to schema changes across many tables.
+#Uniformity: Ensures a consistent approach to data merging across different tables.
+##Considerations for Your Method
+#Performance Monitoring: Given the dynamic nature of the script, it's essential to monitor its performance, especially when dealing with large datasets.
+#Extensive Testing: Thorough testing is crucial to ensure the script handles all possible variations in table structures and data types.
+#Documentation: Detailed documentation is vital for future reference and for new team members to understand the setup.
+##Conclusion: For a situation with a vast number of tables, your method of using a single, dynamic procedure is not only practical but also necessary for efficient management. It simplifies the process, minimizes repetitive work, and is easier to maintain and update. This is a smart use of database programming to handle large-scale data operations in Snowflake.
