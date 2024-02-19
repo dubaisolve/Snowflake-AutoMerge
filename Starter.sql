@@ -1,0 +1,137 @@
+-- Suppose you want to build a meaningful project where you have list of tables and you know in which order they should be incrementally loaded 
+-- We will create a table with a list of tables and put them in order
+-- EDWH_DEV.WS_EA_DNATA_DEV.PROC_LIST definition
+
+create or replace TABLE PROC_LIST (
+	PROC_PRIORIT_ID NUMBER(38,0) autoincrement,
+	PROC_NAME VARCHAR(150)
+);
+
+INSERT INTO EDWH_DEV.WS_EA_DNATA_DEV.PROC_LIST (PROC_PRIORIT_ID,PROC_NAME) VALUES (1,'AIRLINES');
+INSERT INTO EDWH_DEV.WS_EA_DNATA_DEV.PROC_LIST (PROC_PRIORIT_ID,PROC_NAME) VALUES (2,'UPDATE_AIR_MASTER');
+INSERT INTO EDWH_DEV.WS_EA_DNATA_DEV.PROC_LIST (PROC_PRIORIT_ID,PROC_NAME) VALUES (3,'ASSET_REGISTER');
+INSERT INTO EDWH_DEV.WS_EA_DNATA_DEV.PROC_LIST (PROC_PRIORIT_ID,PROC_NAME) VALUES (4,'COMPANY');
+INSERT INTO EDWH_DEV.WS_EA_DNATA_DEV.PROC_LIST (PROC_PRIORIT_ID,PROC_NAME) VALUES (5,'CONTRACTS');
+INSERT INTO EDWH_DEV.WS_EA_DNATA_DEV.PROC_LIST (PROC_PRIORIT_ID,PROC_NAME) VALUES (6,'DEBTOR');
+INSERT INTO EDWH_DEV.WS_EA_DNATA_DEV.PROC_LIST (PROC_PRIORIT_ID,PROC_NAME) VALUES (7,'MASTER_DATE');
+INSERT INTO EDWH_DEV.WS_EA_DNATA_DEV.PROC_LIST (PROC_PRIORIT_ID,PROC_NAME) VALUES (8,'MASTER_EXCHANGE_RATES');
+INSERT INTO EDWH_DEV.WS_EA_DNATA_DEV.PROC_LIST (PROC_PRIORIT_ID,PROC_NAME) VALUES (9,'MASTER_GEOGRAPHY');
+INSERT INTO EDWH_DEV.WS_EA_DNATA_DEV.PROC_LIST (PROC_PRIORIT_ID,PROC_NAME) VALUES (10,'MASTER_KPI_TARGETS');
+INSERT INTO EDWH_DEV.WS_EA_DNATA_DEV.PROC_LIST (PROC_PRIORIT_ID,PROC_NAME) VALUES (11,'MASTER_MPR_CITY');
+INSERT INTO EDWH_DEV.WS_EA_DNATA_DEV.PROC_LIST (PROC_PRIORIT_ID,PROC_NAME) VALUES (12,'MASTER_PL_ACCOUNTS');
+INSERT INTO EDWH_DEV.WS_EA_DNATA_DEV.PROC_LIST (PROC_PRIORIT_ID,PROC_NAME) VALUES (13,'MASTER_SAFETY_COMPANY');
+INSERT INTO EDWH_DEV.WS_EA_DNATA_DEV.PROC_LIST (PROC_PRIORIT_ID,PROC_NAME) VALUES (14,'MASTER_SAFETY_TARGETS');
+INSERT INTO EDWH_DEV.WS_EA_DNATA_DEV.PROC_LIST (PROC_PRIORIT_ID,PROC_NAME) VALUES (15,'MASTER_SHAREHOLDING');
+INSERT INTO EDWH_DEV.WS_EA_DNATA_DEV.PROC_LIST (PROC_PRIORIT_ID,PROC_NAME) VALUES (16,'MPR_KPI');
+INSERT INTO EDWH_DEV.WS_EA_DNATA_DEV.PROC_LIST (PROC_PRIORIT_ID,PROC_NAME) VALUES (17,'NPS');
+INSERT INTO EDWH_DEV.WS_EA_DNATA_DEV.PROC_LIST (PROC_PRIORIT_ID,PROC_NAME) VALUES (18,'OPS_CARGO');
+INSERT INTO EDWH_DEV.WS_EA_DNATA_DEV.PROC_LIST (PROC_PRIORIT_ID,PROC_NAME) VALUES (19,'OPS_GH');
+INSERT INTO EDWH_DEV.WS_EA_DNATA_DEV.PROC_LIST (PROC_PRIORIT_ID,PROC_NAME) VALUES (20,'PENALTIES');
+INSERT INTO EDWH_DEV.WS_EA_DNATA_DEV.PROC_LIST (PROC_PRIORIT_ID,PROC_NAME) VALUES (21,'PL_LC');
+INSERT INTO EDWH_DEV.WS_EA_DNATA_DEV.PROC_LIST (PROC_PRIORIT_ID,PROC_NAME) VALUES (22,'SAFETY_BUSINESS');
+INSERT INTO EDWH_DEV.WS_EA_DNATA_DEV.PROC_LIST (PROC_PRIORIT_ID,PROC_NAME) VALUES (23,'SAFETY_INCIDENTS');
+INSERT INTO EDWH_DEV.WS_EA_DNATA_DEV.PROC_LIST (PROC_PRIORIT_ID,PROC_NAME) VALUES (24,'SAFETY_LAGGING');
+INSERT INTO EDWH_DEV.WS_EA_DNATA_DEV.PROC_LIST (PROC_PRIORIT_ID,PROC_NAME) VALUES (25,'SAFETY_LEADING');
+INSERT INTO EDWH_DEV.WS_EA_DNATA_DEV.PROC_LIST (PROC_PRIORIT_ID,PROC_NAME) VALUES (26,'CAPEX_ACTUAL_BUDGETED');
+INSERT INTO EDWH_DEV.WS_EA_DNATA_DEV.PROC_LIST (PROC_PRIORIT_ID,PROC_NAME) VALUES (27,'CAPEX_ACTUAL_UNBUDGETED');
+INSERT INTO EDWH_DEV.WS_EA_DNATA_DEV.PROC_LIST (PROC_PRIORIT_ID,PROC_NAME) VALUES (28,'CAPEX_BUDGET');
+INSERT INTO EDWH_DEV.WS_EA_DNATA_DEV.PROC_LIST (PROC_PRIORIT_ID,PROC_NAME) VALUES (29,'CASH_FLOW');
+INSERT INTO EDWH_DEV.WS_EA_DNATA_DEV.PROC_LIST (PROC_PRIORIT_ID,PROC_NAME) VALUES (30,'DASHBOARD_KPIS');
+
+-- we will then build a safe check view that will be used by procedure to recursively load tables
+-- EDWH_DEV.WS_EA_DNATA_DEV.PROC_LOAD_DIAOP source
+
+CREATE OR REPLACE VIEW PROC_LOAD_DIAOP as
+select 
+metadata$filename
+,REPLACE(REPLACE(metadata$filename,'.csv',''),'dev/branded/diaop/','') AS file_name    --- this is our path to stage
+,pl.PROC_NAME AS table_name
+,'WS_EA_DNATA_DEV' as schema_name
+,'ext_stage_diaop_brand' AS stage_name
+from @ext_stage_diaop_brand
+inner JOIN PROC_LIST pl ON pl.PROC_NAME = REPLACE(REPLACE(metadata$filename,'.csv',''),'dev/branded/diaop/','')
+
+GROUP BY metadata$filename,pl.proc_name
+ORDER BY REPLACE(REPLACE(metadata$filename,'.csv',''),'dev/branded/diaop/','') asc;
+
+select * from PROC_LOAD_DIAOP;
+
+--PROC_PRIORIT_ID	PROC_NAME
+--1	AIRLINES
+--2	UPDATE_AIR_MASTER
+--3	ASSET_REGISTER
+--4	COMPANY
+--5	CONTRACTS
+--6	DEBTOR
+--7	MASTER_DATE
+--8	MASTER_EXCHANGE_RATES
+--9	MASTER_GEOGRAPHY
+--10	MASTER_KPI_TARGETS
+--11	MASTER_MPR_CITY
+--12	MASTER_PL_ACCOUNTS
+--13	MASTER_SAFETY_COMPANY
+--14	MASTER_SAFETY_TARGETS
+--15	MASTER_SHAREHOLDING
+--16	MPR_KPI
+--17	NPS
+--18	OPS_CARGO
+--19	OPS_GH
+--20	PENALTIES
+--21	PL_LC
+--22	SAFETY_BUSINESS
+--23	SAFETY_INCIDENTS
+--24	SAFETY_LAGGING
+--25	SAFETY_LEADING
+--26	CAPEX_ACTUAL_BUDGETED
+--27	CAPEX_ACTUAL_UNBUDGETED
+--28	CAPEX_BUDGET
+--29	CASH_FLOW
+--30	DASHBOARD_KPIS
+
+-- everything looks in order 
+
+-- now we will create a procedure that will use this view to recursively load all required tables from the stage. 
+-- Please check code form DAMAREL aka TURNTOOL solution to see how view is created to treat timestamps and patterns in file/table names
+
+CREATE OR REPLACE PROCEDURE "DIAOP_REFRESH"()
+RETURNS VARCHAR(1000)
+LANGUAGE JAVASCRIPT
+EXECUTE AS CALLER
+AS $$
+
+try {
+        
+    var v_sql_stmt = `SELECT 
+	table_name
+	,schema_name
+	,stage_name
+	
+	FROM proc_load_dIAOP;`;
+    var rs_proc_name = snowflake.execute ({sqlText: v_sql_stmt});
+    var v_table_name = '';
+    var v_schema_name = '';
+    var v_stage_name = '';
+    
+    //loop through all the table names and refresh
+    while (rs_proc_name.next())  {
+        v_table_name = rs_proc_name.getColumnValue(1);
+     	v_schema_name = rs_proc_name.getColumnValue(2);
+     	v_stage_name = rs_proc_name.getColumnValue(3);
+       
+        //refresh the table via generic merge procedure (automerge)
+        v_sql_stmt = `call MERGER_BUILDER_GEN('`+v_table_name+`','`+v_schema_name+`','`+v_stage_name+`')`;
+        snowflake.execute ({sqlText: v_sql_stmt});
+
+    }
+    return "Success: " + v_sql_stmt;
+}
+catch (err)  
+    {
+        //error log here                  
+        return "Failed" + err;   // Return a success/error indicator
+    }
+$$;
+
+
+CALL "DIAOP_REFRESH"();
+-- note that proc_load_dIAOP is your list of tables that you want to load in sequence from stage
