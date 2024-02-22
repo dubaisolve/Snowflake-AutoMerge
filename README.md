@@ -1,4 +1,4 @@
-# MERGER_BUILDER_GEN and DIAOP_REFRESH Procedures 🚀
+# MERGER_BUILDER_GEN and POC_REFRESH Procedures 🚀
 
 ## MERGER_BUILDER_GEN Procedure
 ### Scalability and Flexibility 🌍
