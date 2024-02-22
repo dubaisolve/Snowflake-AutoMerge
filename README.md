@@ -14,7 +14,7 @@
 - **Testing**: Ensure thorough testing for handling different table structures and data types. 🧪
 - **Documentation**: Essential for future maintenance and clarity for new team members. 📚
 
-## DIAOP_REFRESH Procedure
+## POC_REFRESH Procedure
 ### Automation and Efficiency 🏗️
 - **Automated Table Processing**: Iterates over a preloaded list of tables for automated merging, reducing manual effort. 🔄
 
@@ -97,7 +97,7 @@ Used case for Using AutoMerge Builder Diagram.
 
 ## Used Case solution flow explanation.
 Data factory refreshes data from MFR Oracle DB (ex BO reports) by appending files on ADLS. SharePoint sites are scanned for appended files and sync them with files on adls folder. Once files are updated ADF kicks off SF procedure.
-dIAOP_REFRESH procedure checks the list of files available in the stage and tables via control view. It then passes list of VARIABLES per (table_name,schema_name,stage_name) to MERGER_BUILDER_GEN in a while Loop for execution.
+POC_REFRESH procedure checks the list of files available in the stage and tables via control view. It then passes list of VARIABLES per (table_name,schema_name,stage_name) to MERGER_BUILDER_GEN in a while Loop for execution.
 View is an inner join between list of files in external stage which is on (ADLS) and a list of tables set by user in PROC_LIST table that user wants to load in required sequence. If physical table is missing in DB but exists in PROC_LIST error will be logged into GEN_LOG table. 
 MERGER_BUILDER_GEN Checks CONSTRAINT_VW which holds information for each table columns and unique constrains to use them per table to creates dynamic SQL VAR's for "Select , ON, when matched , when not matched and insert" parts of Generic Merge function. This creates a fully qualified Merge code per each table provided from the list of previous step. Errors will be logged to GEN_LOG table as well as number of records inserted or updated.
 FACT views contain extra calculations, data type conversions and joins applied to get required aggregation as per business requirement. These views are source for BI tools. Currently no Security views are applied but solution is available and documented in RBAC section.
